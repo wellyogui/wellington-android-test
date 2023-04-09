@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "comment")
 class CommentEntity(
-    @PrimaryKey val id: String,
-    val postId: String,
+    @PrimaryKey val id: Int,
+    val postId: Int,
     val name: String,
     val email: String,
     val body: String
