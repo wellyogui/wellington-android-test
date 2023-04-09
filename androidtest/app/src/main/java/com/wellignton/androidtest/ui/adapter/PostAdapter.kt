@@ -32,8 +32,7 @@ class PostAdapter @Inject constructor(@ApplicationContext val context: Context) 
     val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding =
-            ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding)
     }
 
@@ -55,7 +54,11 @@ class PostAdapter @Inject constructor(@ApplicationContext val context: Context) 
 
                 favoriteView.setOnClickListener {
                     onFavoriteItemClickListener?.let {
-                        it(postItemView, postItemView.isFavorite.not(), differ.currentList.indexOf(postItemView))
+                        it(
+                            postItemView,
+                            postItemView.isFavorite.not(),
+                            differ.currentList.indexOf(postItemView)
+                        )
                     }
                 }
 

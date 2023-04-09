@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.wellignton.androidtest.R
-import com.wellignton.androidtest.databinding.FragmentPostsBinding
 import com.wellignton.androidtest.data.model.PostItemView
+import com.wellignton.androidtest.databinding.FragmentPostsBinding
+import com.wellignton.androidtest.ui.adapter.PostAdapter
+import com.wellignton.androidtest.ui.viewmodel.PostsViewModel
 import com.wellignton.androidtest.util.Resource
 import com.wellignton.androidtest.util.gone
-import com.wellignton.androidtest.util.visible
-import com.wellignton.androidtest.ui.viewmodel.PostsViewModel
-import com.wellignton.androidtest.ui.adapter.PostAdapter
 import com.wellignton.androidtest.util.showSnackBar
 import com.wellignton.androidtest.util.view.toPostEntity
 import com.wellignton.androidtest.util.view.toPostItemView
+import com.wellignton.androidtest.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

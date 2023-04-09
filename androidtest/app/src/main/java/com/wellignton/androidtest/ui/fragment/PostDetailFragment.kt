@@ -11,7 +11,6 @@ import com.wellignton.androidtest.data.model.Comment
 import com.wellignton.androidtest.data.model.Post
 import com.wellignton.androidtest.databinding.FragmentPostDetailBinding
 import com.wellignton.androidtest.ui.adapter.CommentAdapter
-import com.wellignton.androidtest.ui.adapter.PostAdapter
 import com.wellignton.androidtest.ui.viewmodel.PostDetailViewModel
 import com.wellignton.androidtest.util.Resource
 import com.wellignton.androidtest.util.gone
@@ -19,7 +18,6 @@ import com.wellignton.androidtest.util.view.toComment
 import com.wellignton.androidtest.util.view.toCommentEntity
 import com.wellignton.androidtest.util.view.toCommentItemView
 import com.wellignton.androidtest.util.view.toPost
-import com.wellignton.androidtest.util.view.toPostItemView
 import com.wellignton.androidtest.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

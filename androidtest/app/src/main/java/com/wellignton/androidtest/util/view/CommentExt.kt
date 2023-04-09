@@ -11,6 +11,6 @@ fun Comment.toCommentItemView(): CommentItemView {
     return CommentItemView(id, postId, name, email, body)
 }
 
-fun Comment.toCommentEntity() : CommentEntity {
+fun Comment.toCommentEntity(): CommentEntity {
     return CommentEntity(id, postId, name, email, body)
 }

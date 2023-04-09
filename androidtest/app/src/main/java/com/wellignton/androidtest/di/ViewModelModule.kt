@@ -16,6 +16,5 @@ import dagger.hilt.android.scopes.ViewModelScoped
 internal object ViewModelMovieModule {
     @Provides
     @ViewModelScoped
-    fun provideRepo(postService: PostService) =
-        AppRepository(postService)
+    fun provideRepo(postService: PostService) = AppRepository(postService)
 }

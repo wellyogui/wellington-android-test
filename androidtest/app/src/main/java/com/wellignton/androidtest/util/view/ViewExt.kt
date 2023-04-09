@@ -31,8 +31,11 @@ fun View.showSnackBar(message: String, duration: Int) {
     Snackbar.make(this, message, duration).show()
 }
 
-fun View.showSnackBar(message: String, duration: Int, actionText: String, actionAction: () -> Unit) {
-    Snackbar.make(this, message, duration)
-        .setAction(actionText) { actionAction() }
-        .show()
+fun View.showSnackBar(
+    message: String,
+    duration: Int,
+    actionText: String,
+    actionAction: () -> Unit
+) {
+    Snackbar.make(this, message, duration).setAction(actionText) { actionAction() }.show()
 }

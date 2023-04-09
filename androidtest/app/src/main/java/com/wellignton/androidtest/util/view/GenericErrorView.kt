@@ -14,8 +14,7 @@ class GenericErrorView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     var action: (() -> Unit)? = null
-) :
-    LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private var _binding: ViewGenericErrorBinding? = null
     private val binding get() = _binding!!

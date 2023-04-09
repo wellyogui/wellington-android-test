@@ -8,9 +8,9 @@ import com.wellignton.androidtest.data.model.PostEntity
 import com.wellignton.androidtest.data.remote.AppRepository
 import com.wellignton.androidtest.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -27,7 +27,8 @@ class PostsViewModel @Inject constructor(
         MutableLiveData<Resource<List<PostEntity>>>()
     val deleteAllPostsLiveData: MutableLiveData<Resource<Unit>> = MutableLiveData<Resource<Unit>>()
     val insetLocalPostsLiveData: MutableLiveData<Resource<Unit>> = MutableLiveData<Resource<Unit>>()
-    val favoritePostLiveData: MutableLiveData<Resource<Pair<Int, Boolean>>> = MutableLiveData<Resource<Pair<Int, Boolean>>>()
+    val favoritePostLiveData: MutableLiveData<Resource<Pair<Int, Boolean>>> =
+        MutableLiveData<Resource<Pair<Int, Boolean>>>()
     val deleteNonFavoritePosts: MutableLiveData<Resource<Unit>> = MutableLiveData<Resource<Unit>>()
     val deletePost: MutableLiveData<Resource<Unit>> = MutableLiveData<Resource<Unit>>()
 
@@ -51,7 +52,15 @@ class PostsViewModel @Inject constructor(
     }
 
     fun insetPost(post: PostEntity) {
-        localPostRepository.addLocalPost(PostEntity(post.id, post.userId, post.title, post.body, false))
+        localPostRepository.addLocalPost(
+            PostEntity(
+                post.id,
+                post.userId,
+                post.title,
+                post.body,
+                false
+            )
+        )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -113,7 +122,8 @@ class PostsViewModel @Inject constructor(
             }.subscribe({
                 favoritePostLiveData.value = Resource.Success(Pair(position, isFavorite))
             }, {
-                favoritePostLiveData.value = Resource.Error(it) { favoritePost(postId, isFavorite, position) }
+                favoritePostLiveData.value =
+                    Resource.Error(it) { favoritePost(postId, isFavorite, position) }
             }).run {
                 disposables.add(this)
             }

@@ -18,7 +18,7 @@ interface PostDao {
     fun insertPost(post: PostEntity): Completable
 
     @Query("SELECT * FROM post WHERE id = :postId")
-    fun getPostById(postId: Int) : Single<PostEntity>
+    fun getPostById(postId: Int): Single<PostEntity>
 
     @Delete
     fun deletePost(post: PostEntity): Completable

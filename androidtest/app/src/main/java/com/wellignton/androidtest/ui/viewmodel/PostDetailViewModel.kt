@@ -11,7 +11,6 @@ import com.wellignton.androidtest.data.model.PostEntity
 import com.wellignton.androidtest.data.remote.AppRepository
 import com.wellignton.androidtest.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -44,16 +43,16 @@ class PostDetailViewModel @Inject constructor(
         ) { post: Post, comments: List<Comment> ->
             Pair(post, comments)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe {
-                postDetailLiveData.value = Resource.Loading(true)
-            }.doFinally {
-                postDetailLiveData.value = Resource.Loading(false)
-            }.subscribe({
-                postDetailLiveData.value = Resource.Success(it)
-            }, {
-                postDetailLiveData.value = Resource.Error(it) { getPostDetail(postId) }
-            }).run {
-                disposables.add(this)
-            }
+            postDetailLiveData.value = Resource.Loading(true)
+        }.doFinally {
+            postDetailLiveData.value = Resource.Loading(false)
+        }.subscribe({
+            postDetailLiveData.value = Resource.Success(it)
+        }, {
+            postDetailLiveData.value = Resource.Error(it) { getPostDetail(postId) }
+        }).run {
+            disposables.add(this)
+        }
     }
 
     private fun getComments(postId: Int): Single<List<Comment>> {
@@ -66,16 +65,16 @@ class PostDetailViewModel @Inject constructor(
         ) { post: PostEntity, comments: List<CommentEntity> ->
             Pair(post, comments)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).doOnSubscribe {
-                localPostDetailLiveData.value = Resource.Loading(true)
-            }.doFinally {
-                localPostDetailLiveData.value = Resource.Loading(false)
-            }.subscribe({
-                localPostDetailLiveData.value = Resource.Success(it)
-            }, {
-                localPostDetailLiveData.value = Resource.Error(it) { getPostDetail(postId) }
-            }).run {
-                disposables.add(this)
-            }
+            localPostDetailLiveData.value = Resource.Loading(true)
+        }.doFinally {
+            localPostDetailLiveData.value = Resource.Loading(false)
+        }.subscribe({
+            localPostDetailLiveData.value = Resource.Success(it)
+        }, {
+            localPostDetailLiveData.value = Resource.Error(it) { getPostDetail(postId) }
+        }).run {
+            disposables.add(this)
+        }
     }
 
     fun saveComment(commentEntity: CommentEntity) {

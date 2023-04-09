@@ -20,7 +20,10 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() 
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CommentItemView, newItem: CommentItemView): Boolean {
+        override fun areContentsTheSame(
+            oldItem: CommentItemView,
+            newItem: CommentItemView
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -28,8 +31,7 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() 
     val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val binding =
-            ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CommentViewHolder(binding)
     }
 

@@ -23,20 +23,15 @@ object NetworkModule {
     fun provideOkHttpClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
+        return OkHttpClient.Builder().addInterceptor(logging).build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     @Provides

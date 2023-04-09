@@ -18,5 +18,5 @@ interface PostService {
     fun getPost(@Path("id") id: String): Single<Post>
 
     @GET("/posts/{id}/comments")
-    fun getPostComments(@Path("id") id: String) : Single<List<Comment>>
+    fun getPostComments(@Path("id") id: String): Single<List<Comment>>
 }

@@ -1,7 +1,6 @@
 package com.wellignton.androidtest.ui
 
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.wellignton.androidtest.R
 import com.wellignton.androidtest.databinding.ActivityMainBinding
