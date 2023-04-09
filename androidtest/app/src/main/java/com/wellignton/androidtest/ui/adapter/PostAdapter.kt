@@ -101,8 +101,11 @@ class PostAdapter @Inject constructor(@ApplicationContext val context: Context) 
     }
 
     fun updateFavorite(position: Int, isFavorite: Boolean) {
-        differ.currentList[position].isFavorite = isFavorite
-        notifyItemChanged(position)
+        val postItemView = differ.currentList[position].copy(isFavorite = isFavorite)
+        val list = differ.currentList.toMutableList()
+        list.removeAt(position)
+        list.add(0, postItemView)
+        differ.submitList(list)
         notifyItemRangeChanged(position, differ.currentList.size)
     }
 

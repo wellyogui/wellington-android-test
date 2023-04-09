@@ -8,5 +8,5 @@ data class PostItemView(
     val userId: Int,
     val title: String,
     val body: String,
-    var isFavorite: Boolean
+    val isFavorite: Boolean
 )
