@@ -1,6 +1,7 @@
 package com.wellignton.androidtest.di
 
 import android.content.Context
+import com.wellignton.androidtest.ui.adapter.CommentAdapter
 import com.wellignton.androidtest.ui.adapter.PostAdapter
 import dagger.Module
 import dagger.Provides
@@ -15,5 +16,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAdapter(@ApplicationContext context: Context): PostAdapter = PostAdapter(context)
+    fun providePostAdapter(@ApplicationContext context: Context): PostAdapter = PostAdapter(context)
+
+    @Provides
+    @Singleton
+    fun provideCommentAdapter(): CommentAdapter = CommentAdapter()
+
 }

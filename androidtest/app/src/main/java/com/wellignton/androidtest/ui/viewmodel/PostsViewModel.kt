@@ -2,7 +2,7 @@ package com.wellignton.androidtest.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wellignton.androidtest.data.local.LocalRepository
+import com.wellignton.androidtest.data.local.LocalPostRepository
 import com.wellignton.androidtest.data.model.Post
 import com.wellignton.androidtest.data.model.PostEntity
 import com.wellignton.androidtest.data.remote.AppRepository
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PostsViewModel @Inject constructor(
     private val repository: AppRepository,
-    private val localRepository: LocalRepository
+    private val localPostRepository: LocalPostRepository
 ) : ViewModel() {
     private val disposables: ArrayList<Disposable> = arrayListOf()
 
@@ -32,7 +32,7 @@ class PostsViewModel @Inject constructor(
     val deletePost: MutableLiveData<Resource<Unit>> = MutableLiveData<Resource<Unit>>()
 
     fun getPostFromLocal() {
-        localRepository.getLocalPosts()
+        localPostRepository.getLocalPosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -51,7 +51,7 @@ class PostsViewModel @Inject constructor(
     }
 
     fun insetPost(post: PostEntity) {
-        localRepository.addLocalPost(PostEntity(post.id, post.userId, post.title, post.body, false))
+        localPostRepository.addLocalPost(PostEntity(post.id, post.userId, post.title, post.body, false))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -89,7 +89,7 @@ class PostsViewModel @Inject constructor(
     }
 
     fun deleteAllPosts() {
-        localRepository.deleteAllPosts()
+        localPostRepository.deleteAllPosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -102,7 +102,7 @@ class PostsViewModel @Inject constructor(
     }
 
     fun favoritePost(postId: Int, isFavorite: Boolean, position: Int) {
-        localRepository.favoritePost(postId, isFavorite)
+        localPostRepository.favoritePost(postId, isFavorite)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -120,7 +120,7 @@ class PostsViewModel @Inject constructor(
     }
 
     fun deletePost(post: PostEntity) {
-        localRepository.deleteLocalPost(post)
+        localPostRepository.deleteLocalPost(post)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -138,7 +138,7 @@ class PostsViewModel @Inject constructor(
     }
 
     fun deleteNonFavoritePosts() {
-        localRepository.deleteNonFavoritePosts()
+        localPostRepository.deleteNonFavoritePosts()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {

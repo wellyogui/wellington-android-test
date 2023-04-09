@@ -15,7 +15,10 @@ interface PostDao {
     fun getPosts(): Single<List<PostEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addPost(post: PostEntity): Completable
+    fun insertPost(post: PostEntity): Completable
+
+    @Query("SELECT * FROM post WHERE id = :postId")
+    fun getPostById(postId: Int) : Single<PostEntity>
 
     @Delete
     fun deletePost(post: PostEntity): Completable
@@ -27,5 +30,5 @@ interface PostDao {
     fun deletePosts(): Completable
 
     @Query("UPDATE post SET isFavorite = :isFavorite WHERE id = :postId")
-    fun setPostFavorite(postId: Int, isFavorite: Boolean): Completable
+    fun updatePostFavorite(postId: Int, isFavorite: Boolean): Completable
 }

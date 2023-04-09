@@ -8,14 +8,18 @@ import javax.inject.Inject
 /**
  * Created by well_ on 09/04/2023 for Android test.
  */
-class LocalRepository @Inject constructor(private val postDao: PostDao) {
+class LocalPostRepository @Inject constructor(private val postDao: PostDao) {
 
     fun getLocalPosts(): Single<List<PostEntity>> {
         return postDao.getPosts()
     }
 
+    fun getPostById(postId: Int): Single<PostEntity> {
+        return postDao.getPostById(postId)
+    }
+
     fun addLocalPost(postEntity: PostEntity): Completable {
-        return postDao.addPost(postEntity)
+        return postDao.insertPost(postEntity)
     }
 
     fun deleteLocalPost(postEntity: PostEntity): Completable {
@@ -23,7 +27,7 @@ class LocalRepository @Inject constructor(private val postDao: PostDao) {
     }
 
     fun favoritePost(postId: Int, isFavorite: Boolean): Completable {
-        return postDao.setPostFavorite(postId, isFavorite)
+        return postDao.updatePostFavorite(postId, isFavorite)
     }
 
     fun deleteNonFavoritePosts(): Completable {

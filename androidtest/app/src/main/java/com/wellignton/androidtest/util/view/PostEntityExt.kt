@@ -1,5 +1,6 @@
 package com.wellignton.androidtest.util.view
 
+import com.wellignton.androidtest.data.model.Post
 import com.wellignton.androidtest.data.model.PostEntity
 import com.wellignton.androidtest.data.model.PostItemView
 
@@ -8,4 +9,8 @@ import com.wellignton.androidtest.data.model.PostItemView
  */
 fun PostEntity.toPostItemView(): PostItemView {
     return PostItemView(id, userId, title, body, isFavorite)
+}
+
+fun PostEntity.toPost(): Post {
+    return Post(id, userId, title, body)
 }

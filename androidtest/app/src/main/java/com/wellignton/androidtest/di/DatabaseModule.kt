@@ -3,6 +3,7 @@ package com.wellignton.androidtest.di
 import android.content.Context
 import androidx.room.Room
 import com.wellignton.androidtest.data.local.AppDatabase
+import com.wellignton.androidtest.data.local.CommentDao
 import com.wellignton.androidtest.data.local.PostDao
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,10 @@ object DatabaseModule {
     @Provides
     fun providePostDao(appDatabase: AppDatabase): PostDao {
         return appDatabase.postDao()
+    }
+
+    @Provides
+    fun provideCommentDao(appDatabase: AppDatabase): CommentDao {
+        return appDatabase.commentDao()
     }
 }

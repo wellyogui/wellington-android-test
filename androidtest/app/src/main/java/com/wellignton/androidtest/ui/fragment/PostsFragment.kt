@@ -28,6 +28,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PostsFragment : Fragment() {
 
+    companion object {
+        fun newInstance(): PostsFragment {
+            return PostsFragment()
+        }
+    }
+
     @Inject
     lateinit var postAdapter: PostAdapter
 
@@ -35,6 +41,7 @@ class PostsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: PostsViewModel by viewModels()
+
     val builder by lazy {
         androidx.appcompat.app.AlertDialog.Builder(
             requireActivity(),
@@ -75,7 +82,7 @@ class PostsFragment : Fragment() {
             }
 
             setOnItemClickListener { postItemView ->
-                //TODO
+                onPostClickListener?.invoke(postItemView.id)
             }
         }
 
@@ -268,6 +275,10 @@ class PostsFragment : Fragment() {
         builder.show()
     }
 
+    private var onPostClickListener: ((Int) -> Unit)? = null
+    fun setOnPostClickListener(listener: (Int) -> Unit) {
+        onPostClickListener = listener
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
