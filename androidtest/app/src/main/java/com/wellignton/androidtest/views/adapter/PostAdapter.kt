@@ -42,17 +42,42 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     inner class PostViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postItemView: PostItemView) {
-            binding.titleView.text = postItemView.title
+            with(binding) {
+                titleView.text = postItemView.title
+                favoriteView.setOnClickListener {
+                    onFavoriteItemClickListener?.let {
+                        it(postItemView, postItemView.isFavorite.not())
+                    }
+                }
+
+                deleteView.setOnClickListener {
+                    onDeleteItemClickListener?.let {
+                        it(postItemView)
+                    }
+                }
+
+                itemViewGroup.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(postItemView)
+                    }
+                }
+            }
         }
     }
 
-    private var onItemClickListener: ((PostItemView, Boolean) -> Unit)? = null
-    fun setOnItemClickListener(listener: (PostItemView, Boolean) -> Unit) {
-        onItemClickListener = listener
+    private var onFavoriteItemClickListener: ((PostItemView, Boolean) -> Unit)? = null
+    fun setOnFavoriteItemClickListener(listener: (PostItemView, Boolean) -> Unit) {
+        onFavoriteItemClickListener = listener
     }
 
-    private var onContainerClickListener: ((PostItemView) -> Unit)? = null
-    fun setOnContainerClickListener(listener: (PostItemView) -> Unit) {
-        onContainerClickListener = listener
+    private var onDeleteItemClickListener: ((PostItemView) -> Unit)? = null
+
+    fun setOnDeleteItemClickListener(listener: (PostItemView) -> Unit) {
+        onDeleteItemClickListener = listener
+    }
+
+    private var onItemClickListener: ((PostItemView) -> Unit)? = null
+    fun setOnItemClickListener(listener: (PostItemView) -> Unit) {
+        onItemClickListener = listener
     }
 }

@@ -45,10 +45,37 @@ class PostsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPosts()
 
+        initView()
+        setupObservers()
+    }
+
+    private fun initView() {
+        binding.postsView.adapter = postAdapter.apply {
+            setOnDeleteItemClickListener { postItemView ->
+                //TODO
+            }
+
+            setOnFavoriteItemClickListener { postItemView, isFavorite ->
+                //TODO
+            }
+
+            setOnItemClickListener { postItemView ->
+                //TODO
+            }
+        }
+    }
+
+    private fun setupObservers() {
         viewModel.postsLiveData.observe(viewLifecycleOwner) {
             when(it) {
                 is Resource.Error -> {
-                    //TODO()
+                    with(binding) {
+                        postsView.gone()
+                        errorView.apply {
+                            visible()
+                            action = it.action
+                        }
+                    }
                 }
                 is Resource.Loading -> {
                     with(binding) {
@@ -61,12 +88,13 @@ class PostsFragment: Fragment() {
                 }
                 is Resource.Success -> {
                     with(binding) {
-                        val postItemsView = it.data.map {post ->
-                            PostItemView(post.id, post.title, false)
-                        }
-                        postAdapter.differ.submitList(postItemsView)
-                        postsView.adapter = postAdapter
+                        postsView.visible()
+                        errorView.gone()
                     }
+                   val postItemsView = it.data.map {post ->
+                       PostItemView(post.id, post.title, false)
+                   }
+                   postAdapter.differ.submitList(postItemsView)
                 }
             }
         }

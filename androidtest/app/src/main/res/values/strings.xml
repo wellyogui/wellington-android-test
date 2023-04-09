@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Android test</string>
+    <string name="content_description_favorite">favorite button</string>
+    <string name="content_description_delete">Delete button</string>
+    <string name="error_message">Ops, something went wrong :(</string>
+    <string name="try_again">Try again</string>
 </resources>

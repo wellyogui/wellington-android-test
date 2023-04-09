@@ -32,7 +32,7 @@ class PostsViewModel @Inject constructor(private val repository: AppRepository):
             .subscribe({
                 postsLiveData.value = Resource.Success(it)
             }, {
-                postsLiveData.value = Resource.Error(it)
+                postsLiveData.value = Resource.Error(it) { getPosts() }
             }).run {
                 disposables.add(this)
             }
