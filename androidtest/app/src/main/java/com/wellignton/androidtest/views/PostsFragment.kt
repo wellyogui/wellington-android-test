@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.wellignton.androidtest.databinding.FragmentPostsBinding
+import com.wellignton.androidtest.model.PostItemView
 import com.wellignton.androidtest.util.Resource
 import com.wellignton.androidtest.util.gone
 import com.wellignton.androidtest.util.visible
@@ -60,7 +61,10 @@ class PostsFragment: Fragment() {
                 }
                 is Resource.Success -> {
                     with(binding) {
-                        postAdapter.differ.submitList(it.data)
+                        val postItemsView = it.data.map {post ->
+                            PostItemView(post.id, post.title, false)
+                        }
+                        postAdapter.differ.submitList(postItemsView)
                         postsView.adapter = postAdapter
                     }
                 }
