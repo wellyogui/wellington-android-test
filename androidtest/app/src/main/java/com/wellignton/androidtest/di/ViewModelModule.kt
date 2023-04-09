@@ -1,8 +1,7 @@
-package com.wellignton.androidtest.module
+package com.wellignton.androidtest.di
 
-import androidx.lifecycle.SavedStateHandle
-import com.wellignton.androidtest.service.AppRepository
-import com.wellignton.androidtest.service.post.PostService
+import com.wellignton.androidtest.data.remote.AppRepository
+import com.wellignton.androidtest.data.remote.post.PostService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

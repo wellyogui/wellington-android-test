@@ -1,7 +1,6 @@
-package com.wellignton.androidtest.service
+package com.wellignton.androidtest.data.remote
 
-import com.wellignton.androidtest.AppContext
-import com.wellignton.androidtest.service.post.PostService
+import com.wellignton.androidtest.data.remote.post.PostService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,9 +1,10 @@
-package com.wellignton.androidtest.views
+package com.wellignton.androidtest.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.wellignton.androidtest.R
 import com.wellignton.androidtest.databinding.ActivityMainBinding
+import com.wellignton.androidtest.ui.fragment.PostsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

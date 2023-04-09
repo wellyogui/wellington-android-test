@@ -1,7 +1,7 @@
-package com.wellignton.androidtest.service.post
+package com.wellignton.androidtest.data.remote.post
 
-import com.wellignton.androidtest.model.Comment
-import com.wellignton.androidtest.model.Post
+import com.wellignton.androidtest.data.model.Comment
+import com.wellignton.androidtest.data.model.Post
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AlertDialogThemeWarning" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:colorAccent">@color/black</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertWarningNegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertWarningPositiveButtonStyle</item>
+    </style>
+
+    <style name="AlertWarningNegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AlertWarningPositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

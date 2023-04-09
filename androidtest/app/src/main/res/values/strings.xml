@@ -4,4 +4,6 @@
     <string name="content_description_delete">Delete button</string>
     <string name="error_message">Ops, something went wrong :(</string>
     <string name="try_again">Try again</string>
+    <string name="delete_non_favorite_posts">Delete all non favorite post</string>
+    <string name="reload_posts">Reload posts</string>
 </resources>

@@ -1,16 +1,23 @@
-package com.wellignton.androidtest.views.adapter
+package com.wellignton.androidtest.ui.adapter
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.wellignton.androidtest.R
+import com.wellignton.androidtest.data.model.PostItemView
 import com.wellignton.androidtest.databinding.ItemPostBinding
-import com.wellignton.androidtest.model.PostItemView
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter @Inject constructor(@ApplicationContext val context: Context) :
+    RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<PostItemView>() {
         override fun areItemsTheSame(oldItem: PostItemView, newItem: PostItemView): Boolean {
@@ -44,6 +51,8 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         fun bind(postItemView: PostItemView) {
             with(binding) {
                 titleView.text = postItemView.title
+                favoriteView.setImageDrawable(setupFavorite(postItemView.isFavorite.not()))
+
                 favoriteView.setOnClickListener {
                     onFavoriteItemClickListener?.let {
                         it(postItemView, postItemView.isFavorite.not())
@@ -52,7 +61,7 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
                 deleteView.setOnClickListener {
                     onDeleteItemClickListener?.let {
-                        it(postItemView)
+                        it(postItemView, differ.currentList.indexOf(postItemView))
                     }
                 }
 
@@ -63,6 +72,44 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
                 }
             }
         }
+
+        private fun setupFavorite(isFavorite: Boolean): Drawable? {
+            return if (isFavorite) {
+                AppCompatResources.getDrawable(context, R.drawable.ic_favorite_border)
+            } else {
+                AppCompatResources.getDrawable(context, R.drawable.ic_favorite)
+            }
+        }
+    }
+
+    fun removeAt(position: Int) {
+        val list = differ.currentList.toMutableList()
+        list.removeAt(position)
+        differ.submitList(list)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, differ.currentList.size)
+    }
+
+    fun removeAll() {
+        val list = differ.currentList.toMutableList()
+        if (list.isEmpty()) {
+            return
+        }
+        list.clear()
+        differ.submitList(list)
+        notifyDataSetChanged()
+    }
+
+    fun updateFavorite(position: Int, isFavorite: Boolean) {
+        differ.currentList[position].isFavorite = isFavorite
+        notifyItemChanged(position)
+        notifyItemRangeChanged(position, differ.currentList.size)
+    }
+
+    fun removeNonFavoritePosts() {
+        val list = differ.currentList.filter { it.isFavorite }.toMutableList()
+        differ.submitList(list)
+        notifyDataSetChanged()
     }
 
     private var onFavoriteItemClickListener: ((PostItemView, Boolean) -> Unit)? = null
@@ -70,9 +117,8 @@ class PostAdapter() : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         onFavoriteItemClickListener = listener
     }
 
-    private var onDeleteItemClickListener: ((PostItemView) -> Unit)? = null
-
-    fun setOnDeleteItemClickListener(listener: (PostItemView) -> Unit) {
+    private var onDeleteItemClickListener: ((PostItemView, Int) -> Unit)? = null
+    fun setOnDeleteItemClickListener(listener: (PostItemView, Int) -> Unit) {
         onDeleteItemClickListener = listener
     }
 
