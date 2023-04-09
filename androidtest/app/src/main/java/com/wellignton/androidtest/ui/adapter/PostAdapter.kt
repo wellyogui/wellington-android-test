@@ -55,7 +55,7 @@ class PostAdapter @Inject constructor(@ApplicationContext val context: Context) 
 
                 favoriteView.setOnClickListener {
                     onFavoriteItemClickListener?.let {
-                        it(postItemView, postItemView.isFavorite.not())
+                        it(postItemView, postItemView.isFavorite.not(), differ.currentList.indexOf(postItemView))
                     }
                 }
 
@@ -112,8 +112,8 @@ class PostAdapter @Inject constructor(@ApplicationContext val context: Context) 
         notifyDataSetChanged()
     }
 
-    private var onFavoriteItemClickListener: ((PostItemView, Boolean) -> Unit)? = null
-    fun setOnFavoriteItemClickListener(listener: (PostItemView, Boolean) -> Unit) {
+    private var onFavoriteItemClickListener: ((PostItemView, Boolean, Int) -> Unit)? = null
+    fun setOnFavoriteItemClickListener(listener: (PostItemView, Boolean, Int) -> Unit) {
         onFavoriteItemClickListener = listener
     }
 

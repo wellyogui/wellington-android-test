@@ -101,7 +101,7 @@ class PostsViewModel @Inject constructor(
             }
     }
 
-    fun favoritePost(postId: Int, isFavorite: Boolean) {
+    fun favoritePost(postId: Int, isFavorite: Boolean, position: Int) {
         localRepository.favoritePost(postId, isFavorite)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -111,9 +111,9 @@ class PostsViewModel @Inject constructor(
             .doFinally {
                 favoritePostLiveData.value = Resource.Loading(false)
             }.subscribe({
-                favoritePostLiveData.value = Resource.Success(Pair(postId, isFavorite))
+                favoritePostLiveData.value = Resource.Success(Pair(position, isFavorite))
             }, {
-                favoritePostLiveData.value = Resource.Error(it) { favoritePost(postId, isFavorite) }
+                favoritePostLiveData.value = Resource.Error(it) { favoritePost(postId, isFavorite, position) }
             }).run {
                 disposables.add(this)
             }

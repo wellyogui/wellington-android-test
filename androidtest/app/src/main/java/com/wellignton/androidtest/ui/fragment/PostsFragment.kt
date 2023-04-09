@@ -70,8 +70,8 @@ class PostsFragment : Fragment() {
                 }
             }
 
-            setOnFavoriteItemClickListener { postItemView, isFavorite ->
-                viewModel.favoritePost(postItemView.id, isFavorite)
+            setOnFavoriteItemClickListener { postItemView, isFavorite, position ->
+                viewModel.favoritePost(postItemView.id, isFavorite, position)
             }
 
             setOnItemClickListener { postItemView ->
@@ -130,9 +130,7 @@ class PostsFragment : Fragment() {
             postsLiveData.observe(viewLifecycleOwner) {
                 when (it) {
                     is Resource.Error -> setupError(it.action)
-                    is Resource.Loading -> {
-                        setupLoading(it.isLoading)
-                    }
+                    is Resource.Loading -> setupLoading(it.isLoading)
                     is Resource.Success -> {
                         with(binding) {
                             postsView.visible()
