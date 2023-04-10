@@ -129,7 +129,7 @@ class PostsFragment : Fragment() {
                         val postItemsView = it.data.map { post ->
                             post.toPostItemView()
                         }
-                        postAdapter.differ.submitList(postItemsView)
+                        postAdapter.differ.submitList(postItemsView.sortedBy { postItemView -> postItemView.isFavorite.not() })
                     }
                 }
             }
