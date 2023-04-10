@@ -15,6 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
@@ -42,25 +43,29 @@ class PostDetailFragmentTest {
     fun `getPostById return a post detail`() {
         val postId = 1
         val post = Post(id = postId, title = "test title", body = "test body", userId = 1)
-        Mockito.`when`(mockApi.getPost(postId.toString())).thenReturn(Single.just(post))
+        `when`(mockApi.getPost(postId.toString())).thenReturn(Single.just(post))
 
         val testObserver = mockApi.getPost(postId.toString()).test()
 
         testObserver.assertComplete()
         testObserver.assertNoErrors()
         testObserver.assertValue(post)
+
+        verify(mockApi).getPost(postId.toString())
     }
 
     @Test
     fun `getPostById fail with a throwable`() {
         val postId = 1
         val error = Throwable("test error")
-        Mockito.`when`(mockApi.getPost(postId.toString())).thenReturn(Single.error(error))
+        `when`(mockApi.getPost(postId.toString())).thenReturn(Single.error(error))
 
         val testObserver = mockApi.getPost(postId.toString()).test()
 
         testObserver.assertNotComplete()
         testObserver.assertError(error)
+
+        verify(mockApi).getPost(postId.toString())
     }
 
     @Test
@@ -88,6 +93,8 @@ class PostDetailFragmentTest {
 
         testObserver.assertNoErrors()
         testObserver.assertValue(comments)
+
+        verify(mockApi).getPostComments(postId.toString())
     }
 
     @Test
@@ -99,6 +106,8 @@ class PostDetailFragmentTest {
         val testObserver = mockApi.getPostComments(postId.toString()).test()
 
         testObserver.assertError { it.message == errorMsg }
+
+        verify(mockApi).getPostComments(postId.toString())
     }
 
     @Test
@@ -108,7 +117,7 @@ class PostDetailFragmentTest {
             CommentEntity(2, 1, "Mary", "Mary@mail.com","Comment 2")
         )
 
-        Mockito.`when`(mockCommentDao.getComments())
+        `when`(mockCommentDao.getComments())
             .thenReturn(Single.just(comments))
 
         val testObserver = mockCommentDao.getComments().test()
@@ -117,67 +126,67 @@ class PostDetailFragmentTest {
         testObserver.assertValue(comments)
         testObserver.assertComplete()
 
-        Mockito.verify(mockCommentDao).getComments()
+        verify(mockCommentDao).getComments()
     }
 
     @Test
     fun `getComments fails with an exception`() {
         val exception = Exception("Test exception")
-        Mockito.`when`(mockCommentDao.getComments()).thenReturn(Single.error(exception))
+        `when`(mockCommentDao.getComments()).thenReturn(Single.error(exception))
 
         val testObserver = mockCommentDao.getComments().test()
         testObserver.assertError(exception)
 
-        Mockito.verify(mockCommentDao).getComments()
+        verify(mockCommentDao).getComments()
     }
 
     @Test
     fun `insertComment completes successfully`() {
-        Mockito.`when`(mockCommentDao.insertComment(any())).thenReturn(Completable.complete())
+        `when`(mockCommentDao.insertComment(any())).thenReturn(Completable.complete())
 
         val comment = CommentEntity(1, 1, "John", "John@mail.com","Comment")
         val testObserver = mockCommentDao.insertComment(comment).test()
         testObserver.assertComplete()
 
-        Mockito.verify(mockCommentDao).insertComment(comment)
+        verify(mockCommentDao).insertComment(comment)
     }
 
     @Test
     fun `insertComment fails with an exception`() {
         val exception = Exception("Test exception")
-        Mockito.`when`(mockCommentDao.insertComment(any())).thenReturn(Completable.error(exception))
+        `when`(mockCommentDao.insertComment(any())).thenReturn(Completable.error(exception))
 
         val comment = CommentEntity(1, 1, "John", "John@mail.com","Comment")
         val testObserver = mockCommentDao.insertComment(comment).test()
         testObserver.assertError(exception)
 
-        Mockito.verify(mockCommentDao).insertComment(comment)
+        verify(mockCommentDao).insertComment(comment)
     }
 
     @Test
     fun `getPostById return a post`() {
         val postId = 1
         val postEntity = PostEntity(postId, 1, "title", "body", false)
-        Mockito.`when`(mockPostDao.getPostById(postId)).thenReturn(Single.just(postEntity))
+        `when`(mockPostDao.getPostById(postId)).thenReturn(Single.just(postEntity))
 
         val testObserver = mockPostDao.getPostById(postId).test()
 
         testObserver.assertNoErrors()
         testObserver.assertValue(postEntity)
 
-        Mockito.verify(mockPostDao).getPostById(postId)
+        verify(mockPostDao).getPostById(postId)
     }
 
     @Test
     fun `getPostById fails with a throwable`() {
         val postId = 1
         val errorMsg = "Error getting post with id $postId"
-        Mockito.`when`(mockPostDao.getPostById(postId)).thenReturn(Single.error(Throwable(errorMsg)))
+        `when`(mockPostDao.getPostById(postId)).thenReturn(Single.error(Throwable(errorMsg)))
 
         val testObserver = mockPostDao.getPostById(postId).test()
 
         testObserver.assertErrorMessage(errorMsg)
 
-        Mockito.verify(mockPostDao).getPostById(postId)
+        verify(mockPostDao).getPostById(postId)
     }
 }

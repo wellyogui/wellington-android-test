@@ -72,6 +72,10 @@ class PostDetailFragment : Fragment() {
         with(binding) {
             commentsView.adapter = commentAdapter
             errorView.action = { viewModel.getPostDetail(postId) }
+
+            backView.setOnClickListener {
+                activity?.onBackPressed()
+            }
         }
     }
 

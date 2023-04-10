@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
@@ -37,10 +36,12 @@ class PostsFragmentTest {
     fun `getPosts returns a list of posts`() {
         val posts = listOf(Post(1, 1, "Test title", "Test body"))
 
-        Mockito.`when`(mockApi.getPosts()).thenReturn(Single.just(posts))
+        `when`(mockApi.getPosts()).thenReturn(Single.just(posts))
 
         mockApi.getPosts().test()
             .assertValue(posts)
+
+        verify(mockApi).getPosts()
     }
 
     @Test
@@ -51,6 +52,8 @@ class PostsFragmentTest {
         val testObserver = mockApi.getPosts().test()
 
         testObserver.assertError(expectedError)
+
+        verify(mockApi).getPosts()
     }
 
     @Test

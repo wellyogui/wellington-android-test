@@ -24,10 +24,11 @@ class MainActivity : AppCompatActivity() {
             setOnPostClickListener {
                 openPostDetail(it)
             }
-        }, R.id.mainRootView, true)
+        }, R.id.mainRootView, false)
     }
 
     private fun openPostDetail(postId: Int) {
-        replaceFragment(PostDetailFragment.newInstance(postId), R.id.mainRootView, false)
+        replaceFragment(PostDetailFragment.newInstance(postId).apply {
+        }, R.id.mainRootView, true)
     }
 }
